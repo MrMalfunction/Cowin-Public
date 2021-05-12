@@ -1,0 +1,70 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Cowin-Discord-Bot
+
+Metadata:
+  AWS::ServerlessRepo::Application:
+    Name: Cowin-Discord-Bot
+    Description: Cowin Vaccine Tracker Discord Bot using webhook
+    Author: Amol Bohora
+    SpdxLicenseId: MIT
+    LicenseUrl: LICENSE.txt
+    ReadmeUrl: README.md
+    Labels: ['Cowin-Tracker', 'Vaccine']
+    HomePageUrl: https://github.com/user1/my-app-project
+    SemanticVersion: 0.1.0
+    SourceCodeUrl: https://github.com/user1/my-app-project
+Parameters:
+  WebHookURL:
+    Type: String
+    Description: (Required) Discord Webhook URL
+    Default: None
+  DistrictId:
+    Type: String
+    Description : (REQUIRED) Offical District ID of cowin api
+    Default : None
+  DistrictRole:
+    Type: String
+    Description: (REQUIRED) Discord role of district
+    Default : None
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 5
+    MemorySize: 150
+
+Resources:
+  CowinDiscordPublicFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: cowin_bot/
+      Handler: app.lambda_handler
+      Runtime: python3.8
+      Environment:
+        Variables:
+          discord_webhook:
+            Ref: WebHookURL
+          id:
+            Ref: DistrictId
+          role_id:
+            Ref: DistrictRole
+      Events:
+        CheckVaccineScheduledEvent:
+          Type: Schedule
+          Properties:
+            Schedule: rate(5 minutes)
+
+
+
+Outputs:
+  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
+  # Find out more about other implicit resources you can reference within SAM
+  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+  CowinDiscordPublicFunction:
+    Description: "Hello World Lambda Function ARN"
+    Value: !GetAtt CowinDiscordPublicFunction.Arn
+  CowinDiscordPublicFunctionIamRole:
+    Description: "Implicit IAM Role created for Hello World function"
+    Value: !GetAtt CowinDiscordPublicFunctionRole.Arn
