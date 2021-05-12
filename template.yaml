@@ -11,23 +11,19 @@ Metadata:
     SpdxLicenseId: MIT
     LicenseUrl: LICENSE.txt
     ReadmeUrl: README.md
-    Labels: ['Cowin-Tracker', 'Vaccine']
-    HomePageUrl: https://github.com/user1/my-app-project
-    SemanticVersion: 0.1.0
-    SourceCodeUrl: https://github.com/user1/my-app-project
+    Labels: [ 'Cowin-Tracker', 'Vaccine' ]
+    HomePageUrl: https://github.com/MrMalfunction/Cowin-Discord-Bot
+    SemanticVersion: 0.1.3
+    SourceCodeUrl: https://github.com/MrMalfunction/Cowin-Discord-Bot
 Parameters:
   WebHookURL:
     Type: String
     Description: (Required) Discord Webhook URL
-    Default: None
-  DistrictId:
-    Type: String
-    Description : (REQUIRED) Offical District ID of cowin api
-    Default : None
+    Default: "https://discord.com/api/webhooks/841983804575186974/fLTibzu6s-G4TyCXKU4-sU6xghwzJ1A88LRYO31N_0_MQlmR5M8ssZxwrjFtYnPzGJeq"
   DistrictRole:
     Type: String
     Description: (REQUIRED) Discord role of district
-    Default : None
+    Default: "841982857449570335"
 
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
@@ -46,8 +42,7 @@ Resources:
         Variables:
           discord_webhook:
             Ref: WebHookURL
-          id:
-            Ref: DistrictId
+          district_id: "389"
           role_id:
             Ref: DistrictRole
       Events:

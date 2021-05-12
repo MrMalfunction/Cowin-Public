@@ -1,0 +1,10 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "cowin-public"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-rhxwm1osqcd6"
+s3_prefix = "cowin-public"
+region = "ap-south-1"
+capabilities = "CAPABILITY_IAM"
+parameter_overrides = "WebHookURL=\"https://discord.com/api/webhooks/841983804575186974/fLTibzu6s-G4TyCXKU4-sU6xghwzJ1A88LRYO31N_0_MQlmR5M8ssZxwrjFtYnPzGJeq\" DistrictId=\"389\" DistrictRole=\"841982857449570335\""

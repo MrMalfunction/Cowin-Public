@@ -1,7 +1,7 @@
 import datetime
+import os
 
 import requests
-import os
 
 
 def lambda_handler(event, context):
@@ -12,11 +12,10 @@ def lambda_handler(event, context):
     date = str(current_time.strftime('%d')) + '-' + str(current_time.strftime('%m')) + '-' + str(
         current_time.strftime('%y'))
     discord_url = os.environ['discord_webhook']
-    districts_role = [{"district_id": int(os.environ['id']), "district_role": os.environ['role_id']}]
-
+    districts_role = [{"district_id": os.environ['district_id'], "district_role": os.environ['role_id']}]
     for j in districts_role:
         url = "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByDistrict?district_id=" + str(
-            j["district_id"]) + " &date=" + date
+            j["district_id"]) + "&date=" + date
         headers = {
             'Accept': 'application/json',
             'referer': 'https://www.cowin.gov.in/',
@@ -36,8 +35,9 @@ def lambda_handler(event, context):
                 message = message + "City : " + str(i['district_name']) + "\n"
                 message = message + "Pincode : " + str(i['pincode']) + "\n"
                 message = message + "Available Capacity : " + str(i['available_capacity']) + "\n"
+        message += "SENT"
         if message != "":
-            message = message + "<@&" + j['district_id'] + ">\n"
+            message = message + "<@&" + j['district_role'] + ">\n"
             response = requests.post(discord_url, json={"content": message})
             print(message)
     return "FINISHED"
