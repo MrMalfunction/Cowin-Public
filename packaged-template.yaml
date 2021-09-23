@@ -21,11 +21,9 @@ Parameters:
   WebHookURL:
     Type: String
     Description: (Required) Discord Webhook URL
-    Default: https://discord.com/api/webhooks/841983804575186974/fLTibzu6s-G4TyCXKU4-sU6xghwzJ1A88LRYO31N_0_MQlmR5M8ssZxwrjFtYnPzGJeq
   DistrictRole:
     Type: String
     Description: (REQUIRED) Discord role of district
-    Default: '841982857449570335'
 Globals:
   Function:
     Timeout: 5
